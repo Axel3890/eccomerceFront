@@ -45,5 +45,26 @@ async function eliminarProductos(id){
     }
   }
 
+  async function agregarProducto(nuevoProducto) {
+    try {
+      const res = await fetch('http://localhost:3000/api/productos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nuevoProducto)
+      });
+      if (!res.ok) {
+        throw new Error('Error al agregar el producto');
+      }
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error('Error al agregar el producto:', error);
+      return null;
+    }
+  }
+  
 
-module.exports = { cargarProductos, eliminarProductos, editarProducto}
+
+module.exports = { cargarProductos, eliminarProductos, editarProducto, agregarProducto}
