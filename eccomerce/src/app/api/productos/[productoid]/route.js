@@ -74,9 +74,7 @@ export async function DELETE(request, {params}) {
         });
 
         if (response.ok) {
-            return NextResponse.empty({
-                status: 204
-            });
+            return NextResponse.json("Producto eliminado");
         } else {
             return NextResponse.error('Error al eliminar el producto en el servidor', {
                 status: response.status

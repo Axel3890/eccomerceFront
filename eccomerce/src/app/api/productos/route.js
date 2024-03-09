@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(){
     const productos = await fetch('http://localhost:3001/productos');
+    console.log('Solicitud GET recibida en /api/productos');
     const data = await productos.json();
     return NextResponse.json(data)
 }
