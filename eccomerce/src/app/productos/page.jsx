@@ -8,7 +8,6 @@ async function cargarProductos(){
       throw new Error('Error al obtener los productos');
     }
     const data = await res.json();
-    console.log(data)
     return data;
   } catch (error) {
     console.error('Error al cargar los productos:', error);
@@ -19,12 +18,14 @@ async function cargarProductos(){
 
 async function Productos (){
   const productos = await cargarProductos();
-  console.log(productos)
+
 
   return (
-    <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {productos.map(producto => (
-        <Link href={`/productos/${producto.id}`}><CardProductos key={producto.id} producto={producto}></CardProductos></Link>
+        <Link key={producto.id} href={`/productos/${producto.id}`}>
+            <CardProductos producto={producto} />
+        </Link>
       ))}
     </div>
   );

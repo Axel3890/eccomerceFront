@@ -7,7 +7,6 @@ async function productoDetail(id){
         throw new Error('Error al obtener los productos');
       }
       const data = await res.json();
-      console.log(data)
       return data;
     } catch (error) {
       console.error('Error al cargar los productos:', error);
@@ -24,7 +23,7 @@ export default async function carddetail({params}) {
         <div className="grid gap-4">
           <img
             alt="Product Image"
-            className="aspect-square object-cover rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 dark:border-gray-800"
+            className="aspect-square object-cover rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800"
             height={400}
             src={producto.imagenUrl}
             width={400} />
