@@ -26,15 +26,13 @@ const Login = () => {
         localStorage.setItem('isLoggedIn', 'true');
       } else {
         console.error('Error al iniciar sesión:', await response.text());
+        localStorage.setItem('isLoggedIn', 'false');
       }
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
     }
   };
 
-  if (isLoggedIn) {
-    return <Redirect to="/productos" />;
-  }
 
   return (
     <div className="flex flex-col items-center space-y-4">

@@ -3,8 +3,9 @@ import { CardContent, CardFooter, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react";
 import { cargarProductos, eliminarProductos, editarProducto } from "../utils/funciones";
-
-const dashboard = () => {
+import { Redirect } from "next";
+import { redirect } from "next/navigation";
+const Dashboard = () => {
   const [productos, setProductos] = useState([]);
   const [editandoProducto, setEditandoProducto] = useState(null);
   const [nuevosDatosProducto, setNuevosDatosProducto] = useState({
@@ -13,6 +14,18 @@ const dashboard = () => {
     imagenUrl: '',
     precio: '',
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log(localStorage.getItem("isLoggedIn"))
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+
+    if (!loggedIn) {
+      redirect("/");;
+    }
+  }, []);
+
 
   useEffect(() => {
     async function cargarYEstablecerProductos() {
@@ -22,6 +35,8 @@ const dashboard = () => {
 
     cargarYEstablecerProductos();
   }, []);
+
+  
 
   const handleEliminarProducto = async (id) => {
     await eliminarProductos(id);
@@ -151,4 +166,5 @@ const dashboard = () => {
   );
 }
 
-export default dashboard;
+export default Dashboard;
+

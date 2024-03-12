@@ -1,5 +1,6 @@
+"use client"
 import { CardContent, Card } from "@/components/ui/card"
-
+import { useEffect, useState } from "react";
 async function productoDetail(id){
     try {
       const res = await fetch(`http://localhost:3000/api/productos/${id}`);
@@ -15,30 +16,42 @@ async function productoDetail(id){
   }
   
 
-export default async function carddetail({params}) {
-  const producto = await productoDetail(params.id); 
-  return (
-    (<Card>
-      <CardContent className="p-6">
-        <div className="grid gap-4">
-          <img
-            alt="Product Image"
-            className="aspect-square object-cover rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800"
-            height={400}
-            src={producto.imagenUrl}
-            width={400} />
-          <div className="grid gap-2">
-            <h2 className="text-2xl font-bold">{producto.name}</h2>
-            <p className="text-2xl font-bold">${producto.price}</p>
-
-          </div>
-          <div className="grid gap-4 text-sm leading-loose">
-            <p>
-                {producto.description}
-            </p>
-          </div>
+  export default function CardDetail({ params }) {
+    const [producto, setProducto] = useState(null);
+  
+    useEffect(() => {
+      const fetchProducto = async () => {
+        try {
+          const productoData = await productoDetail(params.id);
+          setProducto(productoData);
+        } catch (error) {
+          console.error('Error fetching producto:', error);
+        }
+      };
+  
+      fetchProducto();
+    }, [params.id]);
+  
+    return (
+<Card>
+  <CardContent className="p-6">
+    {producto && (
+      <div className="grid gap-4 grid-cols-2">
+        <img
+          alt="Product Image"
+          className="aspect-square object-cover rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800"
+          height={400}
+          src={producto.imagenUrl}
+          width={400}
+        />
+        <div className="grid gap-2">
+          <h2 className="text-2xl font-bold">Nombre: {producto.name}</h2>
+          <p className="text-2xl font-bold">${producto.price}</p>
+          <p>Descripcion: {producto.description}</p>
         </div>
-      </CardContent>
-    </Card>)
-  );
-}
+      </div>
+    )}
+  </CardContent>
+</Card>
+    );
+  }
