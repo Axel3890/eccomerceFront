@@ -1,6 +1,6 @@
 async function cargarProductos(){
     try {
-      const res = await fetch('http://localhost:3000/api/productos');
+      const res = await fetch('https://eccomerce-front-rho.vercel.app/api/productos');
       if (!res.ok) {
         throw new Error('Error al obtener los productos');
       }
@@ -18,7 +18,7 @@ async function cargarProductos(){
 
 async function eliminarProductos(id){
     try {
-      const res = await fetch(`http://localhost:3000/api/productos/${id}`, {
+      const res = await fetch(`https://eccomerce-front-rho.vercel.app/api/productos/${id}`, {
         method: 'DELETE'
       });
       return console.log("producto eliminado")
@@ -30,7 +30,7 @@ async function eliminarProductos(id){
 
   async function editarProducto(id, nuevosDatos) {
     try {
-      const res = await fetch(`http://localhost:3000/api/productos/${id}`, {
+      const res = await fetch(`https://eccomerce-front-rho.vercel.app/api/productos/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ async function eliminarProductos(id){
 
   async function agregarProducto(nuevoProducto) {
     try {
-      const res = await fetch('http://localhost:3000/api/productos', {
+      const res = await fetch('https://eccomerce-front-rho.vercel.app/api/productos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

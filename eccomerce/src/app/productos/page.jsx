@@ -2,20 +2,7 @@
 import { useEffect, useState } from 'react';
 import CardProductos from '@/components/component/card';
 import Link from 'next/link';
-
-async function cargarProductos() {
-  try {
-    const res = await fetch('http://localhost:3000/api/productos');
-    if (!res.ok) {
-      throw new Error('Error al obtener los productos');
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error('Error al cargar los productos:', error);
-    return [];
-  }
-}
+import { cargarProductos } from '../utils/funciones';
 
 function Productos() {
   const [productos, setProductos] = useState([]);

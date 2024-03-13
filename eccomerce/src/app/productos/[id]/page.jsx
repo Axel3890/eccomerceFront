@@ -3,7 +3,7 @@ import { CardContent, Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 async function productoDetail(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/productos/${id}`);
+    const res = await fetch(`https://eccomerce-front-rho.vercel.app/api/productos/${id}`);
     if (!res.ok) {
       throw new Error("Error al obtener los productos");
     }
