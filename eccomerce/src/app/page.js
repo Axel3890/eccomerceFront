@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('https://eccomerce-front-rho.vercel.app/api/login', {
+      const response = await fetch('https://eccomerceback.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
