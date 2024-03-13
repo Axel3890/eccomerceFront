@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { agregarProducto } from "@/app/utils/funciones";
+import Link from "next/link";
 
 const Crearproducto = () => {
   const [nuevoProducto, setNuevoProducto] = useState({
