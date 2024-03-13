@@ -1,10 +1,10 @@
 "use client"
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Redirect } from 'next/navigation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,14 +22,28 @@ const Login = () => {
       });
       if (response.ok) {
         setIsLoggedIn(true);
-        console.log('Inicio de sesión exitoso');
         localStorage.setItem('isLoggedIn', 'true');
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso',
+          text: '¡Bienvenido de nuevo!',
+        });
       } else {
         console.error('Error al iniciar sesión:', await response.text());
         localStorage.setItem('isLoggedIn', 'false');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al iniciar sesión',
+          text: 'Por favor, verifica tu email y contraseña.',
+        });
       }
     } catch (error) {
       console.error('Error al enviar la solicitud:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar la solicitud',
+        text: 'Por favor, inténtalo de nuevo más tarde.',
+      });
     }
   };
 
@@ -51,10 +65,10 @@ const Login = () => {
           </div>
           <Input id="password" required type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <Button className="w-full" onClick={handleLogin}>
+        <Button className="w-full outline" onClick={handleLogin}>
           Ingresar
         </Button>
-        <Button className="w-full">Ingresar como invitado</Button>
+        <Link href={"/productos"}><Button className="w-full outline">Ingresar como invitado</Button></Link>
       </div>
     </div>
   );

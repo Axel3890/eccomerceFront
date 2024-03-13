@@ -5,7 +5,7 @@ export async function GET(request, {params}) {
     const id  = params.productoid;
 
     try {
-        const response = await fetch(`http://localhost:3001/productos/${id}`);
+        const response = await fetch(`https://eccomerceback.onrender.com/productos/${id}`);
 
         if (response.ok) {
             const producto = await response.json();
@@ -28,17 +28,18 @@ export async function GET(request, {params}) {
 
 export async function PUT(request, {params}) {
     const id = params.productoid;
-    const { nombre, descripcion, precio, imagenUrl } = await request.json();
+    const { nombre, descripcion, precio, imagenUrl, marcaId } = await request.json();
 
     const productoActualizado = {
         nombre,
         descripcion,
         precio,
-        imagenUrl
+        imagenUrl,
+        marcaId
     };
 
     try {
-        const response = await fetch(`http://localhost:3001/productos/${id}`, {
+        const response = await fetch(`https://eccomerceback.onrender.com/productos/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -69,7 +70,7 @@ export async function DELETE(request, {params}) {
     const id = params.productoid;
 
     try {
-        const response = await fetch(`http://localhost:3001/productos/${id}`, {
+        const response = await fetch(`https://eccomerceback.onrender.com/productos/${id}`, {
             method: 'DELETE'
         });
 

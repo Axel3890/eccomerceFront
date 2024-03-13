@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 
 export async function GET(){
-    const productos = await fetch('http://localhost:3001/productos');
+    const productos = await fetch('https://eccomerceback.onrender.com/productos');
     console.log('Solicitud GET recibida en /api/productos');
     const data = await productos.json();
     return NextResponse.json(data)
@@ -10,16 +10,17 @@ export async function GET(){
 
 
 export async function POST(request){
-    const { nombre, descripcion, precio, imagenUrl } = await request.json();
+    const { nombre, descripcion, precio, imagenUrl, marcaId } = await request.json();
 
     const nuevoProducto = {
         nombre,
         descripcion,
         precio,
-        imagenUrl
+        imagenUrl,
+        marcaId
     };
     try {
-        const response = await fetch('http://localhost:3001/productos', {
+        const response = await fetch('https://eccomerceback.onrender.com/productos', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

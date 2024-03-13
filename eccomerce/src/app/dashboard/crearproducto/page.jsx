@@ -1,14 +1,7 @@
-"use client";
-import Link from "next/link";
+"use client"
 import { useState } from "react";
-import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  Card,
-} from "@/components/ui/card";
+import Swal from 'sweetalert2';
+import { CardTitle, CardDescription, CardHeader, CardContent, CardFooter, Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,6 +14,7 @@ const Crearproducto = () => {
     descripcion: "",
     precio: "",
     imagenUrl: "",
+    marcaId: ""
   });
 
   const handleChange = (e) => {
@@ -31,29 +25,46 @@ const Crearproducto = () => {
     }));
   };
 
-  console.log(nuevoProducto);
   const handleCrearProducto = async () => {
-    const productoAgregado = await agregarProducto(nuevoProducto);
-    if (productoAgregado) {
-      alert("Producto agregado exitosamente");
-      setNuevoProducto({
-        nombre: "",
-        descripcion: "",
-        precio: "",
-        imagenURL: "",
+    try {
+      const productoAgregado = await agregarProducto(nuevoProducto);
+      if (productoAgregado) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto agregado exitosamente',
+        });
+        setNuevoProducto({
+          nombre: "",
+          descripcion: "",
+          precio: "",
+          imagenURL: "",
+          marcaId: "",
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al agregar el producto',
+          text: 'Por favor, inténtalo de nuevo más tarde.',
+        });
+      }
+    } catch (error) {
+      console.error('Error al agregar el producto:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al agregar el producto',
+        text: 'Por favor, inténtalo de nuevo más tarde.',
       });
-    } else {
-      alert("Error al agregar el producto");
     }
   };
+
 
   return (
     <form onSubmit={handleCrearProducto}>
       <Card className="mx-auto max-w-3xl">
         <CardHeader className="flex items-start gap-4">
           <Link
-            className="flex items-center justify-center rounded-lg w-8 h-8 border border-gray-200 dark:border-gray-800 dark:border-gray-800"
-            href="#"
+            className="flex items-center justify-center rounded-lg w-8 h-8 border border-gray-200"
+            href={"/dashboard"}
           >
             <ChevronLeftIcon className="h-4 w-4" />
             <span className="sr-only">Volver</span>
@@ -100,6 +111,24 @@ const Crearproducto = () => {
               value={nuevoProducto.precio}
               required
             />
+          </div>
+          <div className="grid gap-2">
+            <Label className="text-sm" htmlFor="marcaId">
+              Marca
+            </Label>
+            <select
+              name="marcaId"
+              onChange={handleChange}
+              value={nuevoProducto.marcaId}
+              required
+            >
+              <option value="">Selecciona una marca</option>
+              <option value="1">Apple</option>
+              <option value="2">Samsung</option>
+              <option value="3">Xiaomi</option>
+              <option value="4">Huawei</option>
+              <option value="5">OnePlus</option>
+            </select>
           </div>
           <div className="grid gap-2">
             <div className="grid gap-2">

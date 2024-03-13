@@ -2,9 +2,11 @@
 import { CardContent, CardFooter, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
 import { cargarProductos, eliminarProductos, editarProducto } from "../utils/funciones";
-import { Redirect } from "next";
 import { redirect } from "next/navigation";
+import Swal from 'sweetalert2';
+import Link from "next/link";
 const Dashboard = () => {
   const [productos, setProductos] = useState([]);
   const [editandoProducto, setEditandoProducto] = useState(null);
@@ -13,9 +15,9 @@ const Dashboard = () => {
     descripcion: '',
     imagenUrl: '',
     precio: '',
+    marcaId: ''
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log(localStorage.getItem("isLoggedIn"))
 
   useEffect(() => {
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -67,6 +69,12 @@ const Dashboard = () => {
       descripcion: '',
       imagen: '',
       precio: '',
+      marcaId: '',
+    });
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto editado correctamente',
+      text: 'El producto ha sido actualizado con éxito.',
     });
   };
 
@@ -77,16 +85,17 @@ const Dashboard = () => {
       descripcion: '',
       imagen: '',
       precio: '',
+      marcaId: ''
     });
   };
-
+  console.log(nuevosDatosProducto.marcaId)
   return (
     (<div
       className="flex min-h-screen items-start p-4 md:items-center md:p-6 lg:p-8">
       <div className="grid gap-4 w-full max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold">Productos</h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Maneja tus productos aquí, puedes editarlos, eliminarlos o añadir algun producto
+        <p className="text-gray-500">
+          Maneja tus productos aquí, puedes editarlos, eliminarlos o <Link href={"/dashboard/crearproducto"}><b className="text-black">Añadir algun producto</b></Link>
         </p>
         <div className="grid gap-4 md:gap-6">
         {productos.map(producto => (
@@ -153,6 +162,24 @@ const Dashboard = () => {
                   onChange={(e) => setNuevosDatosProducto({ ...nuevosDatosProducto, precio: e.target.value })}
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                 />
+              </div>
+              <div className="mb-4">
+              <Label className="text-sm" htmlFor="marcaId">
+              Marca
+            </Label>
+            <select
+              name="marcaId"
+              onChange={(e) => setNuevosDatosProducto({ ...nuevosDatosProducto, marcaId: e.target.value })}
+              value={nuevosDatosProducto.marcaId}
+              required
+            >
+              <option value="">Selecciona una marca</option>
+              <option value="1">Apple</option>
+              <option value="2">Samsung</option>
+              <option value="3">Xiaomi</option>
+              <option value="4">Huawei</option>
+              <option value="5">OnePlus</option>
+            </select>
               </div>
               <div className="flex justify-end">
                 <Button type="submit" className="mr-2">Guardar</Button>
