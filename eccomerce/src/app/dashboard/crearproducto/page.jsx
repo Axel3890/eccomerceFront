@@ -27,6 +27,7 @@ const Crearproducto = () => {
   };
 
   const handleCrearProducto = async () => {
+    e.preventDefault();
     try {
       const productoAgregado = await agregarProducto(nuevoProducto);
       if (productoAgregado) {
