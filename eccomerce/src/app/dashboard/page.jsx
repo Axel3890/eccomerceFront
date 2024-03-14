@@ -171,7 +171,6 @@ const Dashboard = () => {
               name="marcaId"
               onChange={(e) => setNuevosDatosProducto({ ...nuevosDatosProducto, marcaId: e.target.value })}
               value={nuevosDatosProducto.marcaId}
-              required
             >
               <option value="">Selecciona una marca</option>
               <option value="1">Apple</option>
